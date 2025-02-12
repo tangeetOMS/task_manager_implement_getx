@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:task_manager_implement_getx/ui/controllers/task_items_controller.dart';
 import '../../data/models/task_list_model.dart';
 
 class TaskItems extends StatelessWidget {
@@ -142,65 +143,64 @@ class TaskItems extends StatelessWidget {
 
   Future<String?> _showEditStatusDialog(
       BuildContext context, String currentStatus) async {
-    return showDialog(
+    final TaskItemsController taskItemsController =
+        Get.put(TaskItemsController());
+    taskItemsController.selectedStatus.value = currentStatus;
+
+    return showDialog<String>(
       context: context,
       builder: (BuildContext context) {
-        String? selectedStatus = currentStatus;
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return AlertDialog(
-              title: const Text('Update Task Status'),
-              content: DropdownButton<String>(
-                value: selectedStatus,
-                isExpanded: true,
-                items: const [
-                  DropdownMenuItem(
-                    value: 'New',
-                    child: Text('New'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Progress',
-                    child: Text('Progress'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Completed',
-                    child: Text('Completed'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Cancelled',
-                    child: Text('Cancelled'),
-                  ),
-                ],
-                onChanged: (value) {
-                  setState(
-                    () {
-                      selectedStatus = value;
-                    },
-                  );
-                },
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Get.back(result: null);
-                  },
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(color: Colors.red),
-                  ),
+        return AlertDialog(
+          title: const Text('Update Task Status'),
+          content: Obx(
+            () => DropdownButton<String>(
+              value: taskItemsController.selectedStatus.value,
+              isExpanded: true,
+              items: const [
+                DropdownMenuItem(
+                  value: 'New',
+                  child: Text('New'),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Get.back(result: selectedStatus);
-                  },
-                  child: const Text(
-                    'Update',
-                    style: TextStyle(color: Colors.blue),
-                  ),
+                DropdownMenuItem(
+                  value: 'Progress',
+                  child: Text('Progress'),
+                ),
+                DropdownMenuItem(
+                  value: 'Completed',
+                  child: Text('Completed'),
+                ),
+                DropdownMenuItem(
+                  value: 'Cancelled',
+                  child: Text('Cancelled'),
                 ),
               ],
-            );
-          },
+              onChanged: (value) {
+                if (value != null) {
+                  taskItemsController.selectedStatus.value = value;
+                }
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.back(result: null);
+              },
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Get.back(result: taskItemsController.selectedStatus.value);
+              },
+              child: const Text(
+                'Update',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ),
+          ],
         );
       },
     );
