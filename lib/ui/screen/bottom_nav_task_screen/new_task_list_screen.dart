@@ -27,7 +27,7 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
+          (_) {
         _fetchAllData();
       },
     );
@@ -129,7 +129,7 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
 
   Future<void> _updateTaskStatus(String taskId, String newStatus) async {
     final bool isSuccess =
-        await _newTaskController.updateTaskStatus(taskId, newStatus);
+    await _newTaskController.updateTaskStatus(taskId, newStatus);
     if (isSuccess) {
       _fetchAllData();
       showSnackBarMessage(context, 'task status updated successfully');
@@ -154,3 +154,4 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
     }
   }
 }
+

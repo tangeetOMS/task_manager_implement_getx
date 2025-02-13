@@ -52,17 +52,4 @@ class UpdateProfileController extends GetxController{
       update();
       return isSuccess;
     }
-/*
-    Future<bool> pickImage() async {
-      bool isSuccess = false;
-      ImagePicker picker = ImagePicker();
-      XFile? image = await picker.pickImage(source: ImageSource.camera);
-      if (image != null) {
-        isSuccess = true;
-        _errorMessage = null;
-        update();
-      }
-      return isSuccess;
-    }*/
-
 }

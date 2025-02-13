@@ -87,3 +87,4 @@ class NewTaskController extends GetxController{
     return isSuccess;
   }
 }
+

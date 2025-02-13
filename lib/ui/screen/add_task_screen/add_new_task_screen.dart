@@ -106,7 +106,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         _titleTEController.text.trim(), _descriptionTEController.text.trim());
     if (isSuccess) {
       _clearTextFields();
-      Get.offAll(MainBottomNavScreen());
+      Get.offAllNamed(MainBottomNavScreen.name);
       showSnackBarMessage(context, 'New task added!');
     } else {
       showSnackBarMessage(context, _addNewTaskController.errorMessage!);
