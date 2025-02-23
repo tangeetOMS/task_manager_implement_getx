@@ -140,18 +140,18 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     height: 24,
                   ),
                   GetBuilder<UpdateProfileController>(
-                    builder: (controller) {
-                      return Visibility(
-                        visible: controller.getUpdateProfileInProgress == false,
-                        replacement: const CenteredCircularProgressIndicator(),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            _onTabUpdateButton();
-                          },
-                          child: const Icon(Icons.arrow_circle_right_outlined),
-                        ),
-                      );
-                    }
+                      builder: (controller) {
+                        return Visibility(
+                          visible: controller.getUpdateProfileInProgress == false,
+                          replacement: const CenteredCircularProgressIndicator(),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              _onTabUpdateButton();
+                            },
+                            child: const Icon(Icons.arrow_circle_right_outlined),
+                          ),
+                        );
+                      }
                   ),
                 ],
               ),
@@ -164,7 +164,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   Widget _buildPhotoPicker() {
     return GestureDetector(
-      onTap: _pickImage,
+      onTap: (){
+        _updateProfileController.pickedImage;
+      },
       child: Container(
         height: 50,
         decoration: BoxDecoration(
@@ -207,14 +209,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   }
 
 
-  Future<void> _pickImage()async{
-    ImagePicker picker = ImagePicker();
-    XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if(image != null){
-     pickedImage = image;
-      setState(() {});
-    }
-  }
+  // Future<void> _pickImage()async{
+  //   ImagePicker picker = ImagePicker();
+  //   XFile? image = await picker.pickImage(source: ImageSource.gallery);
+  //   if(image != null){
+  //    pickedImage = image;
+  //   _updateProfileController.update();
+  //   }
+  // }
 
   void _onTabUpdateButton() {
     if (_formKey.currentState!.validate()) {
@@ -224,12 +226,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   Future<void> _updateProfile() async {
     final bool isSuccess = await _updateProfileController.updateProfile(
-        _emailTEController.text.trim(),
-        _firstNameTEController.text.trim(),
-        _lastNameTEController.text.trim(),
-        _mobileTEController.text.trim(),
-        pickedImage != null ? await pickedImage!.readAsBytes() : null,
-        _passwordTEController.text.isNotEmpty ? _passwordTEController.text : null,
+      _emailTEController.text.trim(),
+      _firstNameTEController.text.trim(),
+      _lastNameTEController.text.trim(),
+      _mobileTEController.text.trim(),
+      pickedImage != null ? await pickedImage!.readAsBytes() : null,
+      _passwordTEController.text.isNotEmpty ? _passwordTEController.text : null,
     );
     if (isSuccess) {
       _passwordTEController.clear();
