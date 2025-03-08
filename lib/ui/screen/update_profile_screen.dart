@@ -165,7 +165,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   Widget _buildPhotoPicker() {
     return GestureDetector(
       onTap: (){
-        _updateProfileController.pickedImage;
+        _updateProfileController.pickImage();
       },
       child: Container(
         height: 50,

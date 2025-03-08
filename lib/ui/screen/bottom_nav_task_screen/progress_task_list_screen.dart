@@ -37,17 +37,17 @@ class _ProgressTaskListScreenState extends State<ProgressTaskListScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-             // _buildTaskSummaryStatus(),
+              // _buildTaskSummaryStatus(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: GetBuilder<ProgressTaskController>(
-                  builder: (controller) {
-                    return Visibility(
+                    builder: (controller) {
+                      return Visibility(
                         visible: controller.getTaskListInProgress == false,
                         replacement: const CenteredCircularProgressIndicator(),
                         child: _buildTaskListView(controller.taskList),
-                    );
-                  }
+                      );
+                    }
                 ),
               ),
             ],
@@ -88,7 +88,7 @@ class _ProgressTaskListScreenState extends State<ProgressTaskListScreen> {
 
   Future<void> _deleteTask(String id) async {
     final NetworkResponse response =
-        await NetworkCaller.getRequest(url: Urls.deleteTaskUrl(id));
+    await NetworkCaller.getRequest(url: Urls.deleteTaskUrl(id));
     if (response.isSuccess) {
       _fetchAllData();
       showSnackBarMessage(context, 'task delete successful');
@@ -110,10 +110,9 @@ class _ProgressTaskListScreenState extends State<ProgressTaskListScreen> {
 
 
   Future<void> _getProgressTaskList() async {
-   final bool isSuccess = await _progressTaskController.getProgressTaskList();
+    final bool isSuccess = await _progressTaskController.getProgressTaskList();
     if (!isSuccess) {
       showSnackBarMessage(context, _progressTaskController.errorMessage!);
     }
   }
 }
-
